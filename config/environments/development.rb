@@ -41,7 +41,21 @@ Rails.application.configure do
 
   # Highlight code that triggered database queries in logs.
   config.active_record.verbose_query_logs = true
+  
+  # Configure action mailer settings with gmail
+  config.action_mailer.delivery_method = :smtp
+  host = 'gmail.com'
+  config.action_mailer.default_url_options = { host: host }
 
+  # Gmail settings
+  config.action_mailer.smtp_settings = {
+    :address              => 'smtp.gmail.com',
+    :port                 => 587,
+    :user_name            => ENV['GMAIL_USERNAME'],
+    :password             => ENV['GMAIL_PASSWORD'],
+    :authentication       => 'plain',
+    :enable_starttls_auto => true
+  }
 
   # Raises error for missing translations.
   # config.action_view.raise_on_missing_translations = true
