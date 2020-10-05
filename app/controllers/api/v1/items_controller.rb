@@ -26,6 +26,19 @@ class Api::V1::ItemsController < ApplicationController
         end
     end
 
+    def complete
+        in_progress = List.find(params[:list_id])
+        complete = List.find_by(user_id: params[:user_id], title: "Completed")
+        @items_list = ItemsList.create(item_id: @item.id, list_id: complete.id)
+        if @items_list.valid?
+            ItemsList.find_by(item_id: @item.id, list_id: in_progress.id).destroy
+            @user = User.find(params[:user_id])
+            render json: { user: UserSerializer.new(@user),  message: "Item added to Completed" }, status: :accepted
+        else
+            render json: { error: 'There was an error, please try again' }, status: :not_acceptable
+        end
+    end
+
     private
 
     def item_params

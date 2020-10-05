@@ -7,6 +7,7 @@ Rails.application.routes.draw do
           post '/login', to: 'auth#create'
           post '/forgot-password', to: 'passwords#forgot'
           post '/reset-password', to: 'passwords#reset'
+          post '/mark-complete', to: 'items#complete'
     end
   end
 end
