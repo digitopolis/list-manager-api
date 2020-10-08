@@ -12,7 +12,8 @@ class Api::V1::ListsController < ApplicationController
     def create
         @list = List.create(list_params)
         if @list.valid?
-            render json: { list: ListSerializer.new(@list) }, status: :accepted
+            @user = User.find(@list.user_id)
+            render json: { list: ListSerializer.new(@list), user: UserSerializer.new(@user) }, status: :accepted
         else 
             render json: { error: 'List not created' }, status: :not_acceptable
         end
