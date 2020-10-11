@@ -56,7 +56,7 @@ class Api::V1::ItemsController < ApplicationController
     private
 
     def item_params
-        params.permit(:title, :creator, :image_url, :medium)
+        params.permit(:title, :creator, :image_url, :medium, :tags => [])
     end
 
     def find_item
