@@ -8,6 +8,7 @@ Rails.application.routes.draw do
           post '/forgot-password', to: 'passwords#forgot'
           post '/reset-password', to: 'passwords#reset'
           post '/mark-complete', to: 'items#complete'
+          post '/add-to-list', to: 'items#add_to_list'
     end
   end
 end
