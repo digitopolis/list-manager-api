@@ -1,5 +1,5 @@
 class Api::V1::ItemsController < ApplicationController
-    before_action :find_item, only: [:show, :complete]
+    before_action :find_item, only: [:show, :complete, :add_to_list]
     
     def index
         @items = Item.all
@@ -39,10 +39,24 @@ class Api::V1::ItemsController < ApplicationController
         end
     end
 
+    def add_to_list
+        @list = List.find(params[:list_id])
+        if @list.items.any? { |item| item.title == @item.title }
+            render json: { error: "#{@item.title} is already on that list" }, status: :not_acceptable
+        end
+        @items_list = ItemsList.create(item_id: @item.id, list_id: @list.id)
+        if @items_list.valid?
+            @user = User.find(@list.user_id)
+            render json: { user: UserSerializer.new(@user), message: "Item added to #{@list.title}" }, status: :accepted
+        else
+            render json: { error: 'There was an error, please try again' }, status: :not_acceptable
+        end
+    end
+
     private
 
     def item_params
-        params.permit(:title, :creator, :image_url, :medium)
+        params.permit(:title, :creator, :image_url, :medium, :tags => [])
     end
 
     def find_item
