@@ -47,6 +47,7 @@ jobs:
           bundle exec rake db:schema:load
       env:
           RAILS_ENV: test
+          DATABASE_HOST: ''
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
     - name: Run tests
