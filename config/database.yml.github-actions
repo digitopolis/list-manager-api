@@ -1,6 +1,6 @@
 test:
   adapter: postgresql
-  host: ''
+  host: <%= ENV['DATABASE_HOST'] || 'localhost' %>
   encoding: unicode
   database: github-actions
   pool: 20
