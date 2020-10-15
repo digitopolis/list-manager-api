@@ -1,6 +1,6 @@
 test:
   adapter: postgresql
-  host: localhost
+  host: ''
   encoding: unicode
   database: github-actions
   pool: 20
